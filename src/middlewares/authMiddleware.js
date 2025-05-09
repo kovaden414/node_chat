@@ -1,11 +1,21 @@
-import { ApiError } from '../exeptions/api.error.js';
-import { localStorage } from '../utils/store.js';
+import { jwtService } from '../services/jwt.service.js';
 
 export const authMiddleware = (req, res, next) => {
-  const user = JSON.parse(localStorage.getItem('user'));
+  const authorization = req.headers['authorization'] || '';
+  const [, token] = authorization.split(' ');
 
-  if (!user) {
-    throw ApiError.unauthorized();
+  if (!authorization || !token) {
+    res.sendStatus(401);
+
+    return;
+  }
+
+  const userData = jwtService.verify(token);
+
+  if (!userData) {
+    res.sendStatus(401);
+
+    return;
   }
 
   next();

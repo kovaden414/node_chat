@@ -8,11 +8,11 @@ export const messageRouter = new express.Router();
 messageRouter.get(
   '/rooms/:roomId/messages',
   authMiddleware,
-  catchError(messageController.getAllMessages)
+  catchError(messageController.getAllMessages),
 );
 
 messageRouter.post(
   '/rooms/:roomId/messages',
   authMiddleware,
-  catchError(messageController.createMessage)
+  catchError(messageController.createMessage),
 );

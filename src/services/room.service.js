@@ -1,19 +1,16 @@
 import { ApiError } from '../exeptions/api.error.js';
 import { Room } from '../models/room.js';
-import { localStorage } from '../utils/store.js';
 
 function getRoomById(roomId) {
   return Room.findOne({ where: { id: roomId } });
 }
 
-async function createRoom(title, participants) {
+async function createRoom(user, title, participants) {
   const existTitle = await Room.findOne({ where: { title } });
 
   if (existTitle) {
     throw ApiError.badRequest('Room already exist');
   }
-
-  const user = JSON.parse(localStorage.getItem('user'));
 
   await Room.create({
     title,
@@ -24,9 +21,7 @@ async function createRoom(title, participants) {
   });
 }
 
-async function updateRoom(room, title, participants) {
-  const user = JSON.parse(localStorage.getItem('user'));
-
+async function updateRoom(user, room, title, participants) {
   if (title) {
     room.title = title;
   }

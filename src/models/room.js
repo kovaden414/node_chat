@@ -11,7 +11,7 @@ export const Room = client.define('room', {
   participants: {
     type: DataTypes.ARRAY(DataTypes.STRING),
     allowNull: false,
-  }
+  },
 });
 
 Room.belongsTo(User);

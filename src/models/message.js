@@ -21,8 +21,7 @@ export const Message = client.define(
     },
   },
   {
-    createdAt: false,
-    updatedAt: false,
+    timestamps: false,
   },
 );
 

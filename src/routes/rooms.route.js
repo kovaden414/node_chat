@@ -6,13 +6,20 @@ import { authMiddleware } from '../middlewares/authMiddleware.js';
 export const roomsRouter = new express.Router();
 
 roomsRouter.get('/', authMiddleware, catchError(roomController.getAllRooms));
-roomsRouter.get('/:roomId', authMiddleware, catchError(roomController.getRoomById));
+
+roomsRouter.get(
+  '/:roomId',
+  authMiddleware,
+  catchError(roomController.getRoomById),
+);
 roomsRouter.post('/', authMiddleware, catchError(roomController.createRoom));
+
 roomsRouter.patch(
   '/:roomId',
   authMiddleware,
   catchError(roomController.updateRoom),
 );
+
 roomsRouter.delete(
   '/:roomId',
   authMiddleware,
