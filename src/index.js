@@ -22,7 +22,7 @@ app.use(cookieParser());
 
 app.use('/user', userRouter);
 app.use('/rooms', roomsRouter);
-app.use(messageRouter);
+app.use('/messages', messageRouter);
 app.use('/refresh', refreshRouter);
 
 app.use(errorMiddleware);
