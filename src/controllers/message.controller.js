@@ -3,12 +3,16 @@ import { Message } from '../models/message.js';
 import { messageService } from '../services/message.service.js';
 import { userService } from '../services/user.service.js';
 
-const getAllMessages = async (req, res) => {
-  const { roomId } = req.params;
+const getAllMessages = async (req, res, next) => {
+  try {
+    const { roomId } = req.params;
 
-  const allMessages = await Message.findAll({ where: { roomId } });
+    const allMessages = await Message.findAll({ where: { roomId } });
 
-  res.send(allMessages);
+    res.send(allMessages);
+  } catch (error) {
+    next(error);
+  }
 };
 
 const createMessage = async (req, res, next) => {

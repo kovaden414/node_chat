@@ -3,10 +3,14 @@ import { Room } from '../models/room.js';
 import { roomService } from '../services/room.service.js';
 import { userService } from '../services/user.service.js';
 
-const getAllRooms = async (req, res) => {
-  const rooms = await Room.findAll();
+const getAllRooms = async (req, res, next) => {
+  try {
+    const rooms = await Room.findAll();
 
-  res.send(rooms);
+    res.send(rooms);
+  } catch (error) {
+    next(error);
+  }
 };
 
 const getRoomById = async (req, res, next) => {

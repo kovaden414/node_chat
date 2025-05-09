@@ -21,11 +21,17 @@ async function createUser(username) {
 }
 
 async function getUser(req) {
-  const { refreshToken } = req.cookies;
-  const userData = await jwtService.verifyRefresh(refreshToken);
+  const authorization = req.headers['authorization'] || '';
+  const [, token] = authorization.split(' ');
 
-  if (!userData || !refreshToken) {
+  if (!authorization || !token) {
     throw ApiError.unauthorized();
+  }
+
+  const userData = jwtService.verify(token);
+
+  if (!userData) {
+    throw ApiError.notFound();
   }
 
   const user = await findByUserName(userData.username);
